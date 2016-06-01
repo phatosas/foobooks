@@ -1,10 +1,7 @@
 <?php
-
 namespace foobooks\Providers;
-
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-
 class RouteServiceProvider extends ServiceProvider
 {
     /**
@@ -15,7 +12,6 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     protected $namespace = 'foobooks\Http\Controllers';
-
     /**
      * Define your route model bindings, pattern filters, etc.
      *
@@ -25,10 +21,8 @@ class RouteServiceProvider extends ServiceProvider
     public function boot(Router $router)
     {
         //
-
         parent::boot($router);
     }
-
     /**
      * Define the routes for the application.
      *

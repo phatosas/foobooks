@@ -14,31 +14,30 @@
 Route::get('/', function () {
     return view('welcome');	
 });
-Route::get('/books', 'BookController@getIndex');
-Route::get('/books/show/{title?}', 'BookController@getShow');
-Route::get('/books/create', 'BookController@getCreate');
-Route::post('/books/create', 'BookController@postCreate');
-Route::get('/books/edit/{title?}', 'BookController@getEdit');
-Route::post('/books/edit/', 'BookController@postEdit');
-Route::get('/books/delete/{title?}', 'BookController@getDelete');
-Route::post('/books/delete/', 'BookController@postDelete');
-Route::get('/authors', 'AuthorController@getIndex');
-Route::get('/authors/show/{id?}', 'AuthorController@getShow');
-Route::get('/authors/create', 'AuthorController@getCreate');
-Route::post('/authors/create', 'AuthorController@postCreate');
-Route::get('/authors/edit/{id}', 'AuthorController@getEdit');
-Route::post('/authors/edit/{id}', 'AuthorController@postEdit');
-Route::post('/authors/delete/{id}', 'AuthorController@postDelete');
 
-Route::get('/practice', function() {
-	$random = new Random();
-	return $random->getRandomString(10);
+Route::group(['middleware' => ['web']], function () {
+	Route::get('/books', 'BookController@getIndex');
+	Route::get('/books/show/{title?}', 'BookController@getShow');
+	Route::get('/books/create', 'BookController@getCreate');
+	Route::post('/books/create', 'BookController@postCreate');
+	Route::get('/books/edit/{title?}', 'BookController@getEdit');
+	Route::post('/books/edit/', 'BookController@postEdit');
+	Route::get('/books/delete/{title?}', 'BookController@getDelete');
+	Route::post('/books/delete/', 'BookController@postDelete');
+	Route::get('/authors', 'AuthorController@getIndex');
+	Route::get('/authors/show/{id?}', 'AuthorController@getShow');
+	Route::get('/authors/create', 'AuthorController@getCreate');
+	Route::post('/authors/create', 'AuthorController@postCreate');
+	Route::get('/authors/edit/{id}', 'AuthorController@getEdit');
+	Route::post('/authors/edit/{id}', 'AuthorController@postEdit');
+	Route::post('/authors/delete/{id}', 'AuthorController@postDelete');
+
+	Route::get('/practice', function() {
+		$random = new Random();
+		return $random->getRandomString(10);
+	});
 });
 
-# Restrict certain routes to only be viewable in the local environments
-# if(App::environment('local')) {
-#	Routes::get('logs', '\Rapwhpoutre\LaravelLogViewer\LogViewerController@index');
-# }
 
 Route::get('/debug', function() {
 

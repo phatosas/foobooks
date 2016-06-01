@@ -34,8 +34,12 @@ class BookController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function postCreate()
+    public function postCreate(Request $request)
     {
+		$this->validate($request, [
+			'title' => 'required|min:3',
+			'author' => 'required|min:3'
+		]);
 		return redirect('/books');
     }
 

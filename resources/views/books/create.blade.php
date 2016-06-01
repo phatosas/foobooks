@@ -17,23 +17,44 @@ such as a page specific stylesheets.
 
 @section('content')
 
-        <h1>Add a new book</h1>
+	<h1>Add a new book</h1>
+	
+	<form method='POST' action='/books/create'>
+	
+		{{ csrf_field() }}
+	
+		<div class='form-group'>
+			<label>* Title:</label>
+			<ul class='errors'>
+			<li>{{ $errors->first('title') }}</li><br>
+			</ul>
+			<input
+				type='text'
+				id='title'
+				name='title'
+				value={{ old('title') }}
+			>
+		</div>
 		
-		<form method='POST' action='/books/create'>
-		
-			{{ csrf_field() }}
-		
-			<div class='form-group'>
-				<label>* Title:</label>
-				<input
-					type='text'
-					id='title'
-					name='title'
-				>
-			</div>
-		
-			<button type="submit" class="btn btn-primary">Add book</button>
-		</form>
+		<div class='form-group'>
+			<label>* Author:</label>
+			<ul class='errors'>
+			<li>{{ $errors->first('author') }}</li><br>
+			</ul>
+			<input
+				type='text'
+				id='author'
+				name='author'
+				value={{ old('author') }}
+			>
+		</div>
+	
+		<button type="submit" class="btn btn-primary">Add book</button><br>
+		<ul class='errors'>
+		@if(count($errors) > 0)
+			<li>Please correct the errors above and try again.</li>
+		@endif
+		</ul>
 @stop
 
 
