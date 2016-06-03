@@ -67,9 +67,7 @@ class BookController extends Controller
     public function getShow($id)
     {
         $book =\foobooks\Book::find($id);
-		$author =\foobooks\Author::find($book->author_id);
-		
-		return view('books.show')->with('book',$book)->with('author',$author);
+		return view('books.show')->with('book',$book);
     }
 
     /**
