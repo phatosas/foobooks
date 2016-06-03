@@ -67,8 +67,9 @@ class BookController extends Controller
     public function getShow($id)
     {
         $book =\foobooks\Book::find($id);
+		$author =\foobooks\Author::find($book->author_id);
 		
-		return view('books.show')->with('book',$book);
+		return view('books.show')->with('book',$book)->with('author',$author);
     }
 
     /**
@@ -112,8 +113,11 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function getDelete($id)
     {
-        //
+        $book =\foobooks\Book::find($id);
+		$book->delete();
+		\Session::flash('flash_message','The book has been deleted');
+		return redirect('/books');
     }
 }

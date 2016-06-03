@@ -23,7 +23,6 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/books/edit/{id?}', 'BookController@getEdit');
 	Route::post('/books/edit/', 'BookController@postEdit');
 	Route::get('/books/delete/{title?}', 'BookController@getDelete');
-	Route::post('/books/delete/', 'BookController@postDelete');
 	Route::get('/authors', 'AuthorController@getIndex');
 	Route::get('/authors/show/{id?}', 'AuthorController@getShow');
 	Route::get('/authors/create', 'AuthorController@getCreate');

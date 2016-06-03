@@ -23,8 +23,8 @@ such as a page specific stylesheets.
 	<div class = 'book'>
 		@foreach($books as $book)
 			<h2>{{ $book->title}}</h2>
-			<a href='/books/show/{{$book->id}}'><img src='{{ $book->cover }}' alt='Cover for {{ $book->title }}'></a>
-			<a href='/books/edit/{{$book->id}}'>Edit</a>
+			<a href='/books/show/{{$book->id}}'><img src='{{ $book->cover }}' alt='Cover for {{ $book->title }}'></a><br>
+			<a href='/books/edit/{{$book->id}}'>Edit</a> <a href='/books/delete/{{$book->id}}'>Delete</a>
 		@endforeach
 @stop
 
