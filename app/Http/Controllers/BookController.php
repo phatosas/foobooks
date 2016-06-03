@@ -15,7 +15,8 @@ class BookController extends Controller
      */
     public function getIndex()
     {
-        return view('books.index');
+		$books = \foobooks\Book::orderBy('id', 'desc')->get();
+        return view('books.index')->with('books',$books);
     }
 
     /**
@@ -38,8 +39,22 @@ class BookController extends Controller
     {
 		$this->validate($request, [
 			'title' => 'required|min:3',
-			'author' => 'required|min:3'
+			'author' => 'required|min:3',
+			'published' => 'required|min:4|date_format:Y',
+			'cover' => 'required|url',
+			'purchase_link' => 'required|url'
 		]);
+		
+		$book = new \foobooks\Book();
+		$book->title = $request->title;
+		$book->author = $request->author;
+		$book->published = $request->published;
+		$book->cover = $request->cover;
+		$book->purchase_link = $request->purchase_link;
+		$book->save();
+		
+		\Session::flash('message', 'Your book was added');
+		
 		return redirect('/books');
     }
 
@@ -49,11 +64,11 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function getShow($title = null)
+    public function getShow($id)
     {
-        return view('books.show',[
-			'title' => $title,
-		]);
+        $book =\foobooks\Book::find($id);
+		
+		return view('books.show')->with('book',$book);
     }
 
     /**
@@ -62,9 +77,11 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function getEdit($title)
+    public function getEdit($id)
     {
-        return 'form for editing book: '.$title;
+        $book = \foobooks\Book::find($id);
+		
+		return view('books.edit')->with('book',$book);
     }
 
     /**
@@ -74,9 +91,19 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function postEdit(Request $request, $id)
+    public function postEdit(Request $request)
     {
-        //
+        $book = \foobooks\Book::find($request->id);
+		
+		$book->title = $request->title;
+		$book->author = $request->author;
+		$book->published = $request->published;
+		$book->cover = $request->cover;
+		$book->purchase_link = $request->purchase_link;
+		$book->save();
+		
+		\Session::flash('message', 'Your book has been updated');
+		return redirect('/books/show/'.$request->id);
     }
 
     /**

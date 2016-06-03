@@ -24,6 +24,10 @@
 </head>
 <body>
 
+	@if(Session::get('message') != null)
+		<div class='flash_message'>{{ Session::get('message') }}</div>
+	@endif
+
     <header>
 		<a href='/'>
         <img

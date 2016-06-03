@@ -17,11 +17,15 @@ such as a page specific stylesheets.
 
 
 @section('content')
-    @if($title)
-        <h1>Show book: {{ $title }}</h1>
-    @else
-        <h1>No book chosen</h1>
-    @endif
+
+	<h1>{{ $book->title}}</h1>
+	<h3>By {{ $book->author }}</h3>
+	<h3>{{ $book->published }}</h3>
+	<div class = 'book'>
+		<img src='{{ $book->cover }}' alt='Cover for {{ $book->title }}'>
+		<a href='/books/edit/{{$book->id}}'>Edit</a>
+		<a href='{{ $book->purchase_link }}'>Purchase Link</a>
+    </div>
 @stop
 
 

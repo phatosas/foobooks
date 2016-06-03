@@ -32,7 +32,7 @@ such as a page specific stylesheets.
 				type='text'
 				id='title'
 				name='title'
-				value={{ old('title') }}
+				value='{{ old('title') }}'
 			>
 		</div>
 		
@@ -45,10 +45,49 @@ such as a page specific stylesheets.
 				type='text'
 				id='author'
 				name='author'
-				value={{ old('author') }}
+				value='{{ old('author') }}'
 			>
 		</div>
-	
+
+		<div class='form-group'>
+			<label>* Published (YYYY):</label>
+			<ul class='errors'>
+			<li>{{ $errors->first('published') }}</li><br>
+			</ul>
+			<input
+				type='text'
+				id='published'
+				name='published'
+				value='{{ old('published') }}'
+			>
+		</div>
+		
+		<div class='form-group'>
+			<label>* URL of cover image:</label>
+			<ul class='errors'>
+			<li>{{ $errors->first('cover') }}</li><br>
+			</ul>
+			<input
+				type='text'
+				id='cover'
+				name='cover'
+				value='{{ old('cover') }}'
+			>
+		</div>
+		
+		<div class='form-group'>
+			<label>* URL to purchase this book:</label>
+			<ul class='errors'>
+			<li>{{ $errors->first('purchase_link') }}</li><br>
+			</ul>
+			<input
+				type='text'
+				id='purchase_link'
+				name='purchase_link'
+				value='{{ old('purchase_link') }}'
+			>
+		</div>
+		
 		<button type="submit" class="btn btn-primary">Add book</button><br>
 		<ul class='errors'>
 		@if(count($errors) > 0)

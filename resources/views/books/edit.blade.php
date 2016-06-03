@@ -1,8 +1,7 @@
 @extends('layouts.master')
 
-
 @section('title')
-    Edit Employee {{$employee->first_name}}
+	Edit book {{ $book->title }}
 @stop
 
 
@@ -12,44 +11,91 @@ Use it to add specific things that *this* View needs in the head,
 such as a page specific stylesheets.
 --}}
 @section('head')
-    
+
 @stop
 
 
 @section('content')
 
-	<h1>Add a new employee to the work force</h1>
-	@if(count($errors) > 0)
-		<ul>
-			@foreach ($errors->all() as $error)
-				<li>{{ $error }}</li>
-			@endforeach
-		</ul>
-	@endif
-	<form method='POST' action='/employees/edit'>
-		<input type='hidden' name='id' value='{{$employee->id}}'>
-		{{ csrf_field() }}
-		<div class='form-group'>
-			<label>* First Name:</label>  <input type='text' name='first_name' value ='{{$employee->first_name}}'> 
-			<label>* Last Name:</label>  <input type='text' name='last_name' value ='{{$employee->last_name}}'> <br><br>
-		</div>
-		<div class='form-group'>
-			<label>* Position:</label>   
-				<input type='text' name='position' value ='{{$employee->position}}'> 
-			</select>
-			<br><br>
-		</div>
-		<div class='form-group'>
-			<label>* Date of Birth:</label>
-			<input type='text' name='month' value ='{{$employee->month}}'> 
-			<input type='text' name='day' value ='{{$employee->day}}'> 
-			<input type='text' name='year' value ='{{$employee->year}}'> 
-			</select>
-		</div>
+	<h1>Edit book {{ $book->title }}</h1>
 	
-	<input type='submit' value='Submit'>
-	<br><br><br><br><br>
-	</form>
+	<form method='POST' action='/books/edit'>
+		
+		<input type='hidden' name='id' value='{{ $book->id }}'>
+	
+		{{ csrf_field() }}
+	
+		<div class='form-group'>
+			<label>Title:</label>
+			<ul class='errors'>
+			<li>{{ $errors->first('title') }}</li><br>
+			</ul>
+			<input
+				type='text'
+				id='title'
+				name='title'
+				value='{{ $book->title }}'
+			>
+		</div>
+		
+		<div class='form-group'>
+			<label>Author:</label>
+			<ul class='errors'>
+			<li>{{ $errors->first('author') }}</li><br>
+			</ul>
+			<input
+				type='text'
+				id='author'
+				name='author'
+				value='{{ $book->author }}'
+			>
+		</div>
+
+		<div class='form-group'>
+			<label>Published (YYYY):</label>
+			<ul class='errors'>
+			<li>{{ $errors->first('published') }}</li><br>
+			</ul>
+			<input
+				type='text'
+				id='published'
+				name='published'
+				value='{{ $book->published }}'
+			>
+		</div>
+		
+		<div class='form-group'>
+			<label>URL of cover image:</label>
+			<ul class='errors'>
+			<li>{{ $errors->first('cover') }}</li><br>
+			</ul>
+			<input
+				type='text'
+				id='cover'
+				name='cover'
+				value='{{ $book->cover }}'
+			>
+		</div>
+		
+		<div class='form-group'>
+			<label>URL to purchase this book:</label>
+			<ul class='errors'>
+			<li>{{ $errors->first('purchase_link') }}</li><br>
+			</ul>
+			<input
+				type='text'
+				id='purchase_link'
+				name='purchase_link'
+				value='{{ $book->purchase_link }}'
+			>
+		</div>
+		
+		<button type="submit" class="btn btn-primary">Save Changes</button><br>
+		<ul class='errors'>
+		@if(count($errors) > 0)
+			<li>Please correct the errors above and try again.</li>
+		@endif
+		</ul>
 @stop
 
 
@@ -59,5 +105,5 @@ Use it to add specific things that *this* View needs at the end of the body,
 such as a page specific JavaScript files.
 --}}
 @section('body')
-    
+
 @stop

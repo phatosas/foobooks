@@ -20,7 +20,7 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/books/show/{title?}', 'BookController@getShow');
 	Route::get('/books/create', 'BookController@getCreate');
 	Route::post('/books/create', 'BookController@postCreate');
-	Route::get('/books/edit/{title?}', 'BookController@getEdit');
+	Route::get('/books/edit/{id?}', 'BookController@getEdit');
 	Route::post('/books/edit/', 'BookController@postEdit');
 	Route::get('/books/delete/{title?}', 'BookController@getDelete');
 	Route::post('/books/delete/', 'BookController@postDelete');
