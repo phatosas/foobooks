@@ -11,6 +11,22 @@
 		font-weight: 100;
 		font-family: 'Lato';
 	}
+	
+	
+	#content { 
+		width: 300px; 
+		height: 300px; 
+		border: 1px solid black; 
+		position: relative; 
+	}
+	
+	.topright { 
+		position: absolute; 
+		top: 5px; 
+		right: 25px; 
+		text-align: right; 
+		letter-spacing: 2px;
+	}
 
 	.container {
 		text-align: center;
@@ -27,4 +43,6 @@
 	.title {
 		font-size: 96px;
 	}
+	
+	
 </style>

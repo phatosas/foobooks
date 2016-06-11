@@ -83,4 +83,19 @@ ul.errors{
 	left:0;
 	background-color:yellow;
 	font-weight:bold;
+}	
+#content { 
+		width: 300px; 
+		height: 300px; 
+		border: 1px solid black; 
+		position: relative; 
 }
+
+.topright { 
+		position: absolute; 
+		top: 5px; 
+		right: 25px; 
+		text-align: right; 
+		letter-spacing: 2px;
+}
+

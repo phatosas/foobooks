@@ -39,16 +39,15 @@ such as a page specific stylesheets.
 		</div>
 		
 		<div class='form-group'>
-			<label>Author:</label>
-			<ul class='errors'>
-			<li>{{ $errors->first('author') }}</li><br>
-			</ul>
-			<input
-				type='text'
-				id='author'
-				name='author'
-				value='{{ $book->author }}'
-			>
+			<label for='author_id'>Author:</label>
+			<select id='author_id' name='author_id'>
+				@foreach($authors_for_dropdown as $author_id => $author_name)
+					<option value='{{$author_id}}' {{ ($book->author_id == $author_id) ? 'SELECTED' : '' }}>
+						{{$author_name}}
+					</option>
+				@endforeach			
+			</select>
+
 		</div>
 
 		<div class='form-group'>
@@ -90,6 +89,19 @@ such as a page specific stylesheets.
 			>
 		</div>
 		
+		<div class='form-group'>
+			<label>Tags</label>	
+			@foreach($tags_for_checkbox as $tag_id => $tag_name)
+				<input
+					type='checkbox'
+					value='{{ $tag_id }}'
+					name='tags[]'
+					{{ (in_array($tag_id,$tags_for_this_book)) ? 'CHECKED' : '' }}
+				>
+				{{ $tag_name }} <br>
+			@endforeach
+		</div>
+			
 		<button type="submit" class="btn btn-primary">Save Changes</button><br>
 		<ul class='errors'>
 		@if(count($errors) > 0)

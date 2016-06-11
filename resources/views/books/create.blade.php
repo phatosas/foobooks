@@ -24,7 +24,7 @@ such as a page specific stylesheets.
 		{{ csrf_field() }}
 	
 		<div class='form-group'>
-			<label>* Title:</label>
+			<label for title>* Title:</label>
 			<ul class='errors'>
 			<li>{{ $errors->first('title') }}</li><br>
 			</ul>
@@ -37,20 +37,21 @@ such as a page specific stylesheets.
 		</div>
 		
 		<div class='form-group'>
-			<label>* Author:</label>
+			<label for='author_id'>Author:</label>
 			<ul class='errors'>
-			<li>{{ $errors->first('author') }}</li><br>
+			<li>{{ $errors->first('author_id') }}</li><br>
 			</ul>
-			<input
-				type='text'
-				id='author'
-				name='author'
-				value='{{ old('author') }}'
-			>
+			<select id='author_id' name='author_id'>
+				@foreach($authors_for_dropdown as $author_id => $author_name)
+					<option value='{{$author_id}}'>
+						{{$author_name}}
+					</option>
+				@endforeach			
+			</select>
 		</div>
 
 		<div class='form-group'>
-			<label>* Published (YYYY):</label>
+			<label for published>* Published (YYYY):</label>
 			<ul class='errors'>
 			<li>{{ $errors->first('published') }}</li><br>
 			</ul>

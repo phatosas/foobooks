@@ -35,15 +35,45 @@
         style='width:300px'
         alt='Foobooks Logo'>
 		</a>
+		
+	@unless (Auth::check())
+		<div class="topright">
+			<nav>
+				<ul>
+					<a href='/register'>Sign up</a> &nbsp; &nbsp;<a href='/login'>Log in</a> 
+				</ul>
+			</nav>
+		</div>
+	@else
+		<div class="topright">
+			<nav>
+				<ul>
+					<a href='/logout'>Log out</a> 
+				</ul>
+			</nav>
+		</div>
+	@endunless
+
+		
+
     </header>
 	
+	@if (Auth::check())
+		<nav>
+			<ul>
+				<li><a href='/books'>View all books</a></li>
+				<li><a href='/books/create'>Add a new book</a></li>
+			</ul>
+		</nav>
+	@else
 	<nav>
 		<ul>
 			<li><a href='/books'>View all books</a></li>
-			<li><a href='/books/create'>Add a new book</a></li>
 		</ul>
 	</nav>
-
+	@endif
+	
+	
     <section>
         {{-- Main page content will be yielded here --}}
         @yield('content')

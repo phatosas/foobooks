@@ -15,7 +15,7 @@ class BookController extends Controller
      */
     public function getIndex()
     {
-		$books = \foobooks\Book::orderBy('id', 'desc')->get();
+		$books = \foobooks\Book::with('author')->orderBy('id', 'desc')->get();
         return view('books.index')->with('books',$books);
     }
 
@@ -26,7 +26,8 @@ class BookController extends Controller
      */
     public function getCreate()
     {
-		return view('books.create');
+		$authors_for_dropdown = \foobooks\Author::authorsForDropDown();
+		return view('books.create')->with('authors_for_dropdown', $authors_for_dropdown);
     }
 
     /**
@@ -39,7 +40,6 @@ class BookController extends Controller
     {
 		$this->validate($request, [
 			'title' => 'required|min:3',
-			'author' => 'required|min:3',
 			'published' => 'required|min:4|date_format:Y',
 			'cover' => 'required|url',
 			'purchase_link' => 'required|url'
@@ -47,7 +47,7 @@ class BookController extends Controller
 		
 		$book = new \foobooks\Book();
 		$book->title = $request->title;
-		$book->author = $request->author;
+		$book->author_id = $request->author_id;
 		$book->published = $request->published;
 		$book->cover = $request->cover;
 		$book->purchase_link = $request->purchase_link;
@@ -78,10 +78,32 @@ class BookController extends Controller
      */
     public function getEdit($id)
     {
-        $book = \foobooks\Book::find($id);
+        $book = \foobooks\Book::with('tags')->find($id);
 		
-		return view('books.edit')->with('book',$book);
+		$authors_for_dropdown = \foobooks\Author::authorsForDropDown();
+
+
+		$tags_for_checkbox = \foobooks\Tag::getTagsForCheckboxes();
+
+    /*
+    Create a simple array of just the tag names for tags associated with this book;
+    will be used in the view to decide which tags should be checked off
+    */
+    $tags_for_this_book = [];
+    foreach($book->tags as $tag) {
+        $tags_for_this_book[] = $tag->id;
     }
+    # Results in an array like this: $tags_for_this_book['novel','fiction','classic'];
+
+    return view('books.edit')
+        ->with([
+            'book' => $book,
+            'authors_for_dropdown' => $authors_for_dropdown,
+            'tags_for_checkbox' => $tags_for_checkbox,
+            'tags_for_this_book' => $tags_for_this_book,
+        ]);
+
+}
 
     /**
      * Update the specified resource in storage.
@@ -95,10 +117,22 @@ class BookController extends Controller
         $book = \foobooks\Book::find($request->id);
 		
 		$book->title = $request->title;
-		$book->author = $request->author;
+		$book->author_id = $request->author_id;
 		$book->published = $request->published;
 		$book->cover = $request->cover;
 		$book->purchase_link = $request->purchase_link;
+		
+		# If there were tags selected...
+		if($request->tags) {
+			$tags = $request->tags;
+		}
+		# If there were no tags selected (i.e. no tags in the request)
+		# default to an empty array of tags
+		else {
+			$tags = [];
+		}		
+		$book->tags()->sync($tags);
+		
 		$book->save();
 		
 		\Session::flash('message', 'Your book has been updated');
@@ -114,6 +148,8 @@ class BookController extends Controller
     public function getDelete($id)
     {
         $book =\foobooks\Book::find($id);
+		$book->tags()->sync([]);
+		
 		$book->delete();
 		\Session::flash('flash_message','The book has been deleted');
 		return redirect('/books');

@@ -6,8 +6,26 @@
 @stop
 
 @section('head')
+	<link href='/css/welcome.css' rel='stylesheet'>
 
-	   <link href='/css/welcome.css' rel='stylesheet'>
+	@unless (Auth::check())
+		<div class="topright">
+			<nav>
+				<ul>
+					<a href='/register'>Sign up</a> &nbsp; &nbsp;<a href='/login'>Log in</a> 
+				</ul>
+			</nav>
+		</div>
+	@else
+		<div class="topright">
+			<nav>
+				<ul>
+					<a href='/logout'>Sign up</a> 
+				</ul>
+			</nav>
+		</div>
+	@endunless
+
 @stop
 
 @section('content')

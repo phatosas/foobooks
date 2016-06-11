@@ -22,7 +22,8 @@ such as a page specific stylesheets.
 	<h3>{{ $book->published }}</h3>
 	<div class = 'book'>
 		<p><a href='{{ $book->purchase_link }}'>Purchase Link</a><p>
-		<img src='{{ $book->cover }}' alt='Cover for {{ $book->title }}'>
+		<img src='{{ $book->cover }}' alt='Cover for {{ $book->title }}'><br>
+		<a href='/books/edit/{{$book->id}}'>Edit</a> <a href='/books/delete/{{$book->id}}'>Delete</a>
     </div>
 @stop
 
