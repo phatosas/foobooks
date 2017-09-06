@@ -13,6 +13,7 @@
 
 
 
+
 Route::get('/', function () {
     return view('welcome');	
 });
@@ -20,11 +21,17 @@ Route::get('/', function () {
 Route::group(['middleware' => ['web']], function () {
 	Route::get('/books', 'BookController@getIndex');
 	Route::get('/books/show/{title?}', 'BookController@getShow');
-	Route::get('/books/create', 'BookController@getCreate');
-	Route::post('/books/create', 'BookController@postCreate');
-	Route::get('/books/edit/{id?}', 'BookController@getEdit');
-	Route::post('/books/edit/', 'BookController@postEdit');
-	Route::get('/books/delete/{title?}', 'BookController@getDelete');
+	Route::group(['middleware' => 'auth'], function(){
+		Route::get('/books/create', [
+			'uses' => 'BookController@getCreate',
+			'middleware' => 'auth'
+			]
+		);
+		Route::post('/books/create', 'BookController@postCreate');
+		Route::get('/books/edit/{id?}', 'BookController@getEdit');
+		Route::post('/books/edit/', 'BookController@postEdit');
+		Route::get('/books/delete/{title?}', 'BookController@getDelete');
+	});
 	Route::get('/authors', 'AuthorController@getIndex');
 	Route::get('/authors/show/{id?}', 'AuthorController@getShow');
 	Route::get('/authors/create', 'AuthorController@getCreate');
@@ -44,8 +51,9 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('/register', 'Auth\AuthController@postRegister');
 
 	Route::get('/logout', 'Auth\AuthController@logout');
+});
 	
-	Route::get('/show-login-status', function() {
+Route::get('/show-login-status', function() {
 
     # You may access the authenticated user via the Auth facade
     $user = Auth::user();
@@ -58,12 +66,6 @@ Route::group(['middleware' => ['web']], function () {
     }
 
     return;
-	});
-
-	Route::get('/practice', function() {
-		$random = new Random();
-		return $random->getRandomString(10);
-	});
 });
 
 
